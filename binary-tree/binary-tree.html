@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二叉树</title>
+</head>
+<body>
+<button onclick="binaryTreeClick()">理解二叉树</button>
+</body>
+<script src="utils/binary-tree.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+//栈实例
+<script>
+		var arr = [];
+		for (var i = 0; i < 5; i++) {
+				var temp = i + 1;
+				arr.push(temp);
+				console.log(temp + "  入栈");
+				console.log(arr);
+		}
+		console.log('栈，先进后出');
+		/*
+          这个地方需要注意，因为在出栈的过程arr.length是变化的，每移除一个元素，arr.length就会减一
+        ，所以需要将其赋值给一个变量
+        */
+		var len = arr.length;
+		for (var i = 0; i < len; i++) {
+				console.log(arr.pop());
+		}
+</script>
+//队列实例，队列:表的前端进行删除，队尾进行插入
+<script>
+		var arr = [];
+		for (var i = 0; i < 5; i++) {
+				var temp = i + 1;
+				arr.unshift(temp);
+				console.log(temp + "  插入");
+				console.log(arr);
+		}
+		console.log('队列，先进先出 First In First Out');
+		/*
+          这个地方需要注意，因为在删除的过程arr.length是变化的，每移除一个元素，arr.length就会减一
+        ，所以需要将其赋值给一个变量
+        */
+		var len = arr.length;
+		for (var i = 0; i < len; i++) {
+				console.log(arr.pop());
+		}
+</script>
+</html>
