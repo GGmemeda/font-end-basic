@@ -19,3 +19,7 @@
 11.HTML5 SSE
 12.HTML5 WebSocket
 十三、http于https,https安全
+https:即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。
+http:超文本传输协议，信息是明文传输。
+区别:https 则是具有安全性的ssl加密传输协议http和https使用的是完全不同的连接方式用的端口也不一样,前者是80,后者是443。
+十四、http2
