@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>triangle</title>
+</head>
+<body>
+<script language="javascript">
+    function combination(m, n) {
+        if (n === 0) return 1;
+         if (m === n) return 1;
+        return combination(m - 1, n - 1) + combination(m - 1, n);
+    }
+
+    function pascal(num) {
+        console.log(num);
+        for (var i = 0; i < num; i++) {
+            for (var j = 0; j <= i; j++) {
+                document.write(combination(i, j) + "&nbsp;&nbsp;");
+            }
+            document.write('<br>');
+        }
+    }
+
+    pascal(10);
+
+</script>
+</body>
+</html>

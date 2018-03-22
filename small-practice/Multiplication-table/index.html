@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" href="list.css" charset="UTF-8">
+    <title>table</title>
+</head>
+<body>
+</body>
+<script type="text/javascript">
+    function multiplicationList(num) {
+        var innerContent = '<table cellpadding="6" cellspacing="0">';
+        for (var col = 1; col < num; col++) {
+            innerContent += '<tr>';
+            for (var row = 1; row < num; row++) {
+                if (col >= row) {
+                    innerContent += '<td class="multiplication-td">' + row + '*' +col + '=' + (col * row) + '</td>';
+                } else {
+                    innerContent += '<td class="multiplication-td-other"></td>';
+                }
+            }
+            innerContent += '</tr>';
+        }
+        innerContent += '</table>';
+        return innerContent;
+    }
+
+    window.onload = function () {
+        document.body.innerHTML=multiplicationList(13);
+    }
+</script>
+</html>
