@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        /**
+         * 如何完成飞机大战这个JavaScript编写的游戏
+         * 1. HTML页面的动画制作（animation）
+         * 2. 好好地理解JavaScript面向对象的编程思想
+         * 3. 完成飞机和子弹的JavaScript代码编写
+         *
+         * 复习JavaScript中面向对象编程的基础语法和相关的概念
+         * 1. 对象: 用程序编程的方式来描述一个事务。重点: 学会去抓取或是判断这个飞机大战中有哪些是对象
+         * 2. 属性: 描述对象的特征（关键性要素）. 如: 飞机移动的坐标,速度,子弹发射速度...
+         * 3. 方法: 描述对象的一种行为. 如: 飞机移动,子弹移动
+         *
+         * function createPlayerPlane(imgsrc,x,y,speed) {
+         *     this.imgsrc = imgsrc;
+         *     this.x = x;
+         *     this.y = y;
+         *     this.speed = speed;
+         *     this.move = function() {
+         *
+         *     }
+         * }
+         *
+         * var myplane = new createPlayerPlane("1.png",195,200,5);
+         * myplane.move();
+         */
+    </script>
+    <style type="text/css">
+        #main {
+            width: 441px;
+            height: 643px;
+            position: absolute;
+            top: 0px;
+            margin-left: 440px;
+            overflow: hidden;
+        }
+        #touxiang {
+            position: absolute;
+            z-index: 3;
+            margin-top: 130px;
+            margin-left: 10px;
+            display: none;
+        }
+        #startphoto {
+            position: absolute;
+            z-index: -2;
+            display: block;
+        }
+        #bgphoto{
+            position: absolute;
+            z-index: -3;
+            height: 1324px;
+            -webkit-animation:bbb 30s infinite linear;
+        }
+        #bgphoto>img {float:left;}
+        @-webkit-keyframes bbb{
+            from{margin-top: -662px;}
+            to{margin-top: 0px;}
+        }
+        #stopgame {
+            width: 35px;
+            height: 35px;
+            border: 3px solid #ffffff;
+            color: #ffffff;
+            border-radius: 40px;
+            text-align: center;
+            line-height: 35px;
+            float: right;
+            margin-right: 10px;
+            margin-top: 10px;
+            display: none;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+        #stop{
+            width: 441px;
+            height: 662px;
+            position: absolute;
+            z-index: 10;
+            background-color: rgba(0,0,0,0.6);
+            left: 448px;
+            top:0px;
+            display: none;
+        }
+        .button{
+            width: 150px;
+            height: 50px;
+            color: #ffffff;
+            background-color: rgba(0,0,0,0.6);
+            text-align: center;
+            line-height: 50px;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bolder;
+            margin: 0 auto;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #Start{
+            position: absolute;
+            width: 170px;
+            height: 45px;
+            border-radius: 5px;
+            color:rgba(0,0,0,0);
+            text-align: center;
+            line-height: 35px;
+            top: 535px;
+            left: 240px;
+        }
+        #close{
+            /*border: 1px solid red;*/
+            position: absolute;
+            width: 170px;
+            height: 45px;
+            border-radius: 5px;
+            color:rgba(0,0,0,0);
+            text-align: center;
+            line-height: 35px;
+            top: 535px;
+            left: 33px;
+        }
+        #titlescore {
+            font-size: 20px;
+            font-weight: bold;
+            position: absolute;
+            z-index: 2;
+            margin-top: 5px;
+            margin-left: 5px;
+            display: none;
+            color: #ffffff;
+        }
+        #wanjia{
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<!-- 游戏界面的div -->
+<div id="main" style="height: 643px;">
+    <!-- 玩家头像 -->
+    <div id="touxiang"><img src="plane1/tou.png"></div>
+    <!-- 游戏欢迎界面 -->
+    <div id="startphoto"><img src="plane1/start.png" width="441px"></div>
+    <!-- 游戏开始背景界面 -->
+    <div id="bgphoto"><img src="plane1/bg1.png"><img src="plane1/bg1.png"></div>
+    <!-- 游戏暂停键 -->
+    <div id="stopgame" onclick="mystopgame()">||</div>
+    <!-- 游戏相关参数 -->
+    <div id="titlescore">
+        <div id="kill">杀敌:0</div>
+        <div id="killscore">总分:0</div>
+        <div id="blood">boss血量:10</div>
+        <div id="playblood">玩家血量:<div id="wanjia">5</div></div>
+    </div>
+    <div id="Start" class="word" onclick="startgame()">Start Game</div>
+    <div id="close" class="word" onclick="startgame()">Exit</div>
+</div>
+
+<!-- 游戏点击暂定出现的遮盖层 -->
+<div id="stop">
+    <div style="width: 400px;height: 300px"></div>
+    <div class="button" onclick="continuegame()">继续游戏</div>
+    <div class="button" onclick="newgame()">新的游戏</div>
+    <div class="button" onclick="closegame()">退出游戏</div>
+</div>
+
+<audio id="zdmusic" src="audio/bgmusic.mp3" loop="loop"></audio>
+<audio id="startmusic" src="audio/30miao.mp3"></audio>
+<audio id="shutmusic" src="audio/effcet_sfx_sandan.mp3"></audio>
+<audio id="demaxiya" src="audio/demaxiya.mp3"></audio>
+<audio id="legendary" src="audio/legendary.mp3"></audio>
+
+</body>
+<script type="text/javascript" src="clonefeiji.js"></script>
+<script type="text/javascript">
+
+    function startgame() {
+        /**
+         * 开始游戏
+         * 1. 隐藏startphoto
+         * 2. 显示stopgame
+         * 3. 显示头像touxiang
+         */
+        var zdmusic=document.getElementById("zdmusic");
+        var startmusic=document.getElementById("startmusic");
+        var stopgame=document.getElementById("stopgame");
+        var startphoto=document.getElementById("startphoto");
+        var touxiang=document.getElementById("touxiang");
+        var titlescore=document.getElementById("titlescore");
+        touxiang.style.display="block"; //玩家头像显示
+        startphoto.style.display="none"; //游戏欢迎界面隐藏
+        stopgame.style.display="block"; //暂停按钮显示
+        titlescore.style.display = "block"; //游戏参数显示
+        zdmusic.play();
+        startmusic.play();
+        myplane = new createPlayerPlane("plane1/LiPlane.png",190,520,5,5);
+        ctrlplanetop = setInterval(ctrlplane,10); //飞机移动的计数器
+        bulletspeedstop = setInterval(bulletspeed, 200); //每隔200毫秒不断监听是否子弹发射
+        bulletflystop = setInterval(bulletfly,1);//每隔1毫秒监听子弹移动的速度
+        mysmellplanestop = setInterval(mysmellplane, 500); //每间隔500毫秒敌人小飞机出现在游戏界面上
+        smellmovestop = setInterval(smellmove, 50); //每间隔50毫秒敌人小飞机开始移动
+        smellplanedeathstop = setInterval(smellplanedeath, 10); //每隔10毫秒监控子弹是否击中敌人的小飞机
+
+        /**
+         * 移动飞机怎么实现
+         * 1. 键盘监听: 用户按下键盘和释放键盘的两个动作.需要设置一个boolean类型变量 true代表按下键盘移动的状态 false代表释放键盘的状态
+         * 2. 随时监听
+         */
+        document.body.onkeydown = function(code) {
+            if(code.keyCode == 37) { //左边方向键
+                leftbtn = true;
+            }
+            if(code.keyCode==38){
+                topbtn=true;
+            }
+            if(code.keyCode==39){
+                rightbtn=true;
+            }
+            if(code.keyCode==40){
+                buttombtn=true;
+            }
+            if (code.keyCode == 65) {
+                shutbtn = true;
+            }
+        }
+        document.body.onkeyup = function(code) {
+            if (code.keyCode == 37) {
+                leftbtn = false;
+            }
+            if(code.keyCode==38){
+                topbtn=false;
+            }
+            if(code.keyCode==39){
+                rightbtn=false;
+            }
+            if(code.keyCode==40){
+                buttombtn=false;
+            }
+            if (code.keyCode == 65) {
+                shutbtn = false;
+            }
+        }
+    }
+
+    function ctrlplane() { //操作飞机移动方向的函数
+        if(leftbtn == true) {
+            myplane.leftmove();
+        }
+        if (rightbtn == true) {
+            myplane.rightmove();
+        }
+        if (topbtn == true) {
+            myplane.topmove();
+        }
+        if (buttombtn == true) {
+            myplane.buttommove();
+        }
+    }
+
+    function bulletspeed() { //操作子弹上弹夹的操作,通过点击键盘的A字母完成上弹夹的过程
+        if (shutbtn == true) {
+            var shutmusic=document.getElementById("shutmusic");
+            shutmusic.play();
+            myplane.shot();
+        }
+    }
+
+    function bulletfly() { //子弹飞行的函数
+        for(i = 0; i < bulletlist.length; i++) {
+            if (bulletlist[i].btstate == true) { //子弹未击中敌人小飞机状态
+                bulletlist[i].move();
+                if (bulletlist[i].bulletnode.style.top <= 0) { //子弹已经飞出游戏界面
+                    mainobj.removeChild(bulletlist[i].bulletnode);
+                    bulletlist.splice(i, 1); //从数组的当前子弹索引位置开始删除1个子弹
+                }
+            } else {
+                mainobj.removeChild(bulletlist[i].bulletnode);
+                bulletlist.splice(i, 1); //从数组的当前子弹索引位置开始删除1个子弹
+            }
+        }
+    }
+
+    function mysmellplane() { //创建敌人的小飞机对象
+        if (Math.random() * 100 <= 20) { //多个敌人飞机出现到游戏机界面的时间差
+            var mysmellplane1=new createsmellplane("plane1/BluePlane.png",parseInt(Math.random()*400),-parseInt(Math.random()*180)-10,parseInt(Math.random()*4+2));
+            smellplanelist.push(mysmellplane1);
+        }
+    }
+
+    function smellmove() { //控制敌人小飞机移动的函数
+        for (i = 0; i < smellplanelist.length; i++) {
+            if (smellplanelist[i].isdead == false) {
+                smellplanelist[i].move();
+                if (parseInt(smellplanelist[i].smellplaneNode.style.top) >= parseInt(mainobj.style.height)) {
+                    mainobj.removeChild(smellplanelist[i].smellplaneNode);
+                    smellplanelist.splice(i,1);
+                }
+            } else { //被子弹击中后出现爆炸的图片还是需要从游戏界面中消失
+                smellplanelist[i].deadtime--;
+                if (smellplanelist[i].deadtime <= 0) {
+                    mainobj.removeChild(smellplanelist[i].smellplaneNode);
+                    smellplanelist.splice(i,1);
+                }
+            }
+        }
+    }
+
+    function smellplanedeath() { //小飞机被击中后的函数
+        for (i = 0; i < smellplanelist.length; i++) {
+            for (j = 0; j < bulletlist.length; j++) {
+                var zdleft = parseInt(bulletlist[j].bulletnode.style.left);
+                var zdtop = parseInt(bulletlist[j].bulletnode.style.top);
+                var fjleft = parseInt(smellplanelist[i].smellplaneNode.style.left);
+                var fjtop = parseInt(smellplanelist[i].smellplaneNode.style.top);
+                if (smellplanelist[i].isdead == false) {
+                    if (zdleft >= fjleft - 10 && zdleft < fjleft + 40 && zdtop > fjtop && zdtop < fjtop + 50) {
+                        smellplanelist[i].smellplaneNode.src = "plane1/BeiJi_02.png";
+                        bulletlist[j].btstate = false; //子弹击中飞机消失状态
+                        smellplanelist[i].isdead = true; //小飞机被击中的状态为死掉状态
+                        legendarys(); //执行小飞机被击中后的音效
+                        killnum++;
+                        score = killnum * 5;
+                        setInterval(killNum,1);
+                        setInterval(killScore,1);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 击中敌人小飞机的声音效果
+     * */
+    function legendarys(){
+        var legendary=document.getElementById("legendary");
+        legendary.play();
+    }
+
+    /**
+     * 更新游戏界面中当前的杀敌数量
+     * */
+    function killNum() {
+        var kill = document.getElementById("kill");
+        kill.innerHTML = "杀敌:" + killnum;
+    }
+
+    /**
+     * 更新游戏界面中当前的杀敌总分
+     * */
+    function killScore() {
+        var killscore = document.getElementById("killscore");
+        killscore.innerHTML = "总分:" + score;
+    }
+
+    function mystopgame() {
+        var stop=document.getElementById("stop");
+        var zdmusic=document.getElementById("zdmusic");
+        var startmusic=document.getElementById("startmusic");
+        zdmusic.pause();
+        startmusic.pause();
+        stop.style.display="block";
+        /**
+         * 暂停后停止游戏界面中的一切活动,停止计数器setInterval
+         */
+        clearInterval(ctrlplanetop);
+        clearInterval(bulletspeedstop);
+        clearInterval(bulletflystop);
+        clearInterval(mysmellplanestop);
+        clearInterval(smellmovestop);
+        clearInterval(smellplanedeathstop);
+    }
+</script>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Carousel demo</title>
+    <style>
+        .Carousel{
+            width: 100%;
+            height: auto;
+            position: relative;
+            border: 1px solid #ddd;
+        }
+        .next{
+            cursor: pointer;
+            width: 54px;
+            background: url(./images/prev_next.png) -45px no-repeat;
+
+        }
+        .prev{
+            cursor: pointer;
+            width: 54px;
+            background: url(./images/prev_next.png) 6px no-repeat;
+        }
+    </style>
+    <link rel="stylesheet" href="./style/index.css">
+</head>
+<body>
+<div class="Carousel" id="Carousel">
+    <div class="Carousel-content">
+        <div class="item ">
+            <img src="./images/img01.jpg" alt="">
+        </div>
+        <div class="item">
+            <img src="./images/img02.jpg" alt="">
+        </div>
+        <div class="item active">
+            <img src="./images/img03.jpg" alt="">
+        </div>
+    </div>
+  <button class="Carousel-control prev" id="prev"></button>
+  <button class="Carousel-control next" id="next"></button>
+</div>
+</body>
+<script src="utils/Carousel.js"></script>
+<script src="js/index.js"></script>
+</html>

@@ -1,0 +1,104 @@
+.Carousel-control{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0,0,0,.6);
+    background-color: rgba(0,0,0,0);
+    filter: alpha(opacity=50);
+    opacity: .5;
+    outline: none;
+    border: none;
+}
+.Carousel-control.next{
+    right: 0;
+    left: auto;
+}
+.Carousel-content{
+    overflow: hidden;
+    white-space: nowrap;
+    height: 100%;
+    min-width: 100%;
+    position: absolute;
+}
+.Carousel-content .item{
+    background-color:#ddd ;
+    display: none;
+    position: relative;
+    -webkit-transition: 0.6s ease-in-out left;
+    -o-transition: 0.6s ease-in-out left;
+    transition: 0.6s ease-in-out left;
+}
+.Carousel-content .item img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+@media all and (transform-3d), (-webkit-transform-3d) {
+    .Carousel-content > .item {
+        -webkit-transition: -webkit-transform 0.6s ease-in-out;
+        -moz-transition: -moz-transform 0.6s ease-in-out;
+        -o-transition: -o-transform 0.6s ease-in-out;
+        transition: transform 0.6s ease-in-out;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000px;
+        -moz-perspective: 1000px;
+        perspective: 1000px;
+    }
+
+.Carousel-content > .item.next,
+.Carousel-content > .item.active.right {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    left: 0;
+}
+.Carousel-content > .item.prev,
+.Carousel-content > .item.active.left {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    left: 0;
+}
+.Carousel-content > .item.next.left,
+.Carousel-content > .item.prev.right,
+.Carousel-content > .item.active {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    left: 0;
+}
+}
+.Carousel-content > .active,
+.Carousel-content > .next,
+.Carousel-content > .prev {
+    display: block;
+}
+.Carousel-content > .active {
+    left: 0;
+}
+.Carousel-content > .next,
+.Carousel-content > .prev {
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.Carousel-content > .next {
+    left: 100%;
+}
+.Carousel-content > .prev {
+    left: -100%;
+}
+.Carousel-content > .next.left,
+.Carousel-content > .prev.right {
+    left: 0;
+}
+.Carousel-content > .active.left {
+    left: -100%;
+}
+.Carousel-content > .active.right {
+    left: 100%;
+}
