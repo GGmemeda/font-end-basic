@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sort 方法</title>
+</head>
+<body>
+
+</body>
+<script>
+    var example = [123, 2344, 123, 84, 6, 8, 0, 334];
+    //关于冒泡排序
+    //当前模式为由小到大排序
+    function sort(arr) {
+        let useArr = arr;
+        for (var a = 0; a < arr.length; a++) {//意义在于:循环数组内所有元素，保证调整到所有元素
+            for (var b = 0; b < arr.length - 1 - a; b++) {//意义在于:调整当前arr.length-a位数元素中最大数放到arr.length-a的位置
+                if (useArr[b] > useArr[b + 1]) {
+                    var temp = useArr[b];
+                    useArr[b] = useArr[b + 1];
+                    useArr[b + 1] = temp;
+                }
+            }
+        }
+        return useArr;
+    }
+//同理由大到小排列
+    function smallSort(arr) {
+        const  useArr=arr;
+        for(var a=0;a<useArr.length;a++){//同理，此行为为保证调整到数组数组中每一个元素
+            for(var b=0;b<useArr.length-a-1;b++){//由于是由大到小排序。此循环的职责为每一个循环都调整最小的到最后,-1的意义在于保证useArr[b+1]永远有值
+                if(useArr[b]<useArr[b+1]){
+                    var temp=useArr[b];//小的为调整值，调整值赋予后一个值
+                    useArr[b]=useArr[b+1];
+                    useArr[b+1]=temp;
+                }
+            }
+        }
+    }
+    smallSort(example);
+    console.log(example);
+</script>
+</html>
