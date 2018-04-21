@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>one-to-study</title>
+</head>
+<body>
+<ul id="upEvent">
+    <li>我是来测试的1</li>
+    <li>我是来测试的2</li>
+    <li>我是来测试的3</li>
+    <li>我是来测试的4</li>
+</ul>
+</body>
+<script>
+  window.onload = function () {
+    var upEvent = document.getElementById('upEvent');
+    upEvent.addEventListener('click', function (e) {
+      console.log(e.target);
+    });
+  };
+
+  function foo () {
+    getName = function () {
+      console.log(1);
+    };
+    return this;
+  }
+
+  foo.getName = function () {
+    console.log(2);
+  };
+  foo.prototype.getName = function () {
+    console.log(3);
+  };
+  var getName = function () {
+    console.log(4);
+  };
+
+  function getName () {
+    console.log(5);
+  }
+
+  foo.getName();//2
+  getName();//4，此处有个理解函数声明的优先级最高，会被提升至当前作用域最顶端
+  foo().getName();//1
+  getName();//1
+  new foo.getName();//2
+  new foo().getName();//3
+  new new foo().getName();//3
+</script>
+</html>
