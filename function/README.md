@@ -2,7 +2,6 @@
 
 ```bash
 1.函数的返回结果只依赖于它的参数
-     ```bash
      例：
         #const add = (a, b) => x + b
         #add(1,2) //3
@@ -19,4 +18,3 @@
                   return items.a;  }
         var c = effect( values );
             values.a // 3
-```
